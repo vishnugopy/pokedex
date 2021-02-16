@@ -9,7 +9,8 @@ let listItem = document.querySelectorAll(".list-item")
 //buttons
 let leftButton = document.querySelector(".left-button");
 let rightButton = document.querySelector(".right-button");
-
+let next ;
+let previous ;
 
 mainScreen.classList.remove("hide");
 
@@ -21,7 +22,10 @@ let fetch_config = {
 }
 
 // Initialise la requete http avec l'url de la ressource et les configurations définis ci-dessus
-fetch("https://pokeapi.co/api/v2/pokemon", fetch_config)
+var apilink = "https://pokeapi.co/api/v2/pokemon";
+
+function getpokies(){
+fetch( apilink , fetch_config)
 .then(function (response) {
 
     // On appelle la method json a partir de l'objet response pour parser les données renvoyer par l'API
@@ -36,29 +40,25 @@ fetch("https://pokeapi.co/api/v2/pokemon", fetch_config)
                 // gestion erreur authentification
             }
             else {
-                console.log(data["results"]);
+                console.log(data);
                 // ici on peut exploiter nos donnée
                 let arr = data["results"];
-    
 
+               
+                    let str = "";
+                    for (let i = 0; i < arr.length; i++) {  
+                        str = i+1 + "." + arr[i]["name"];
 
-                for (let j = 0; j < listItem.length; j++) {
-                    for (let i = 0; i < arr.length; i++) {
-                        listItem.forEach(element => {
-                            element.innerHTML = j + ". HELLO" ;
-                        });
-                       
+                       listItem[i].innerHTML = str ;
                     }
 
-                }
+                    next = data["next"];
+                    previous = data["previous"];
 
-                       
-               
-
-
-               
+                    
             }
         })
+        
         .catch(function (data_parsing_error) {
             console.log(data_parsing_error);
         })
@@ -67,3 +67,22 @@ fetch("https://pokeapi.co/api/v2/pokemon", fetch_config)
     // Cas erreur server (API)
     console.log(server_errors);
 })
+
+
+}
+
+
+rightButton.addEventListener("click" , ()=>{
+    apilink = next;
+    getpokies();
+})
+
+leftButton.addEventListener("click" , ()=>{
+    apilink = previous ;
+    getpokies();
+})
+
+window.addEventListener("load" , () =>{
+    getpokies();
+})
+
