@@ -11,6 +11,11 @@ let typeTwo = document.querySelector(".poke-type-two")
 //buttons
 let leftButton = document.querySelector(".left-button");
 let rightButton = document.querySelector(".right-button");
+let bbutton = document.querySelector(".buttons__button:nth-child(1)");
+let abutton = document.querySelector(".buttons__button:nth-child(2)");
+
+
+//extra
 let next;
 let previous;
 let nameofpokie;
@@ -19,10 +24,10 @@ var apilink = "https://pokeapi.co/api/v2/pokemon";
 
 function getpokies() {
     fetch(apilink)
-        .then(function (response) {
+        .then(function(response) {
 
             response.json()
-                .then(function (data) {
+                .then(function(data) {
                     if (response.status == 400) {
                         console.log(data);
                         // gestion erreur données envoyer a la requette
@@ -38,9 +43,9 @@ function getpokies() {
                         for (let i = 0; i < arr.length; i++) {
 
                             fetch(data["results"][i]["url"])
-                                .then(function (response) {
+                                .then(function(response) {
                                     response.json()
-                                        .then(function (data) {
+                                        .then(function(data) {
                                             //console.log(data)
 
                                             str = data["id"] + ". " + arr[i]["name"];
@@ -62,11 +67,11 @@ function getpokies() {
                     }
                 })
 
-                .catch(function (data_parsing_error) {
+                .catch(function(data_parsing_error) {
                     console.log(data_parsing_error);
                 })
         })
-        .catch(function (server_errors) {
+        .catch(function(server_errors) {
             // Cas erreur server (API)
             console.log(server_errors);
         })
@@ -75,28 +80,39 @@ function getpokies() {
 
 
 rightButton.addEventListener("click", () => {
-    apilink = next;
+    function nextpage() {
+        apilink = next;
+    }
+    nextpage();
     getpokies();
 })
 
+
 leftButton.addEventListener("click", () => {
-    apilink = previous;
+    function previouspage() {
+        apilink = previous;
+    }
+    previouspage();
     getpokies();
 })
 
 window.addEventListener("load", () => {
     getpokies();
+
 })
+
+
+
 
 
 listItem.forEach(element => {
     element.addEventListener("click", () => {
         fetch("https://pokeapi.co/api/v2/pokemon/" + element.textContent.match(/\d+/))
-            .then(function (response) {
+            .then(function(response) {
 
                 // On appelle la method json a partir de l'objet response pour parser les données renvoyer par l'API
                 response.json()
-                    .then(function (data) {
+                    .then(function(data) {
                         if (response.status == 400) {
                             console.log(data);
                             // gestion erreur données envoyer a la requette
@@ -116,31 +132,38 @@ listItem.forEach(element => {
                             pokeId.innerHTML = finalID;
                             pokeFrontImage.src = data["sprites"]["front_default"];
                             pokeBackImage.src = data["sprites"]["back_default"];
+                            document.body.style.backgroundImage = data["sprites"]["front_default"];
                             pokeWeight.innerHTML = data["weight"];
                             pokeHeight.innerHTML = data["height"];
                             typeOne.style.textTransform = "capitalize";
                             typeTwo.style.textTransform = "capitalize";
 
                             if (data["types"].length == 2) {
+                                typeTwo.style.display = "block";
                                 typeOne.innerHTML = data["types"][0]["type"]["name"]
                                 typeTwo.innerHTML = data["types"][1]["type"]["name"]
                                 mainScreen.className = '';
-                                mainScreen.classList.add("main-screen", typeTwo.innerHTML);
+                                document.body.className = '';
+                                mainScreen.classList.add("main-screen", typeOne.innerHTML);
+                                document.body.classList.add("main-screen", typeOne.innerHTML);
                             } else {
                                 typeOne.innerHTML = data["types"][0]["type"]["name"]
                                 typeTwo.style.display = "none";
                                 mainScreen.className = '';
+                                document.body.className = '';
                                 mainScreen.classList.add("main-screen", typeOne.innerHTML);
+                                document.body.classList.add("main-screen", typeOne.innerHTML);
+
 
                             }
 
                         }
                     })
-                    .catch(function (data_parsing_error) {
+                    .catch(function(data_parsing_error) {
                         console.log(data_parsing_error);
                     })
             })
-            .catch(function (server_errors) {
+            .catch(function(server_errors) {
                 // Cas erreur server (API)
                 console.log(server_errors);
             })
