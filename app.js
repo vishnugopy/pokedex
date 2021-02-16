@@ -114,7 +114,6 @@ listItem.forEach(element => {
                             let idStr = id.toString()
                             let finalID = shape.slice(0, 4 - idStr.length) + id;
                             pokeId.innerHTML = finalID;
-
                             pokeFrontImage.src = data["sprites"]["front_default"];
                             pokeBackImage.src = data["sprites"]["back_default"];
                             pokeWeight.innerHTML = data["weight"];
