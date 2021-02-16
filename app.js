@@ -33,28 +33,28 @@ function getpokies() {
                         //console.log(data["results"][1]["url"]);
                         let arr = data["results"];
                         let str = "";
-                        
+
 
                         for (let i = 0; i < arr.length; i++) {
 
-                        fetch( data["results"][i]["url"])
-                        .then(function(response) {
-                            response.json()
-                            .then(function(data){
-                                //console.log(data)
-                                
-                                str = data["id"]+ ". " + arr[i]["name"];
-                                listItem[i].innerHTML = str;
-                            })
-                        } )
-                       
-                            
+                            fetch(data["results"][i]["url"])
+                                .then(function (response) {
+                                    response.json()
+                                        .then(function (data) {
+                                            //console.log(data)
+
+                                            str = data["id"] + ". " + arr[i]["name"];
+                                            listItem[i].innerHTML = str;
+                                        })
+                                })
+
+
                         }
-                        
+
 
                         listItem.forEach(element => {
                             element.style.textTransform = "capitalize";
-                            
+
                         });
 
                         next = data["next"];
@@ -109,7 +109,11 @@ listItem.forEach(element => {
                             mainScreen.classList.remove("hide");
                             pokeName.innerHTML = data["name"];
                             pokeName.style.textTransform = "capitalize";
-                            pokeId.innerHTML = "#00" + data["id"];
+                            let id = data["id"]
+                            let shape = "#000";
+                            let idStr = id.toString()
+                            let finalID = shape.slice(0, 4 - idStr.length) + id;
+                            pokeId.innerHTML = finalID;
                             pokeFrontImage.src = data["sprites"]["front_default"];
                             pokeBackImage.src = data["sprites"]["back_default"];
                             pokeWeight.innerHTML = data["weight"];
