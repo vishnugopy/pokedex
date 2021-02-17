@@ -14,7 +14,6 @@ let rightButton = document.querySelector(".right-button");
 let bbutton = document.querySelector(".buttons__button:nth-child(1)");
 let abutton = document.querySelector(".buttons__button:nth-child(2)");
 
-
 //extra
 let next;
 let previous;
@@ -39,7 +38,6 @@ function getpokies() {
                         let arr = data["results"];
                         let str = "";
 
-
                         for (let i = 0; i < arr.length; i++) {
 
                             fetch(data["results"][i]["url"])
@@ -55,7 +53,6 @@ function getpokies() {
 
 
                         }
-
 
                         listItem.forEach(element => {
                             element.style.textTransform = "capitalize";
@@ -77,7 +74,6 @@ function getpokies() {
         })
 
 }
-
 
 rightButton.addEventListener("click", () => {
     function nextpage() {
@@ -112,10 +108,6 @@ abutton.addEventListener("click" , ()=>{
 
 })
 
-
-
-
-
 listItem.forEach(element => {
     element.addEventListener("click", () => {
         fetch("https://pokeapi.co/api/v2/pokemon/" + element.textContent.match(/\d+/))
@@ -149,10 +141,7 @@ listItem.forEach(element => {
                             typeTwo.style.textTransform = "capitalize";
                             document.body.style.backgroundImage = `url(${pokeFrontImage.src})`;
                             document.body.style.backgroundRepeat = "space";
-                            
-
-
-                            
+                                                        
                             let code = "papa";
                             let arr = [];
                             window.addEventListener("keydown", (e) => {
@@ -183,10 +172,6 @@ listItem.forEach(element => {
 
 
                             }
-
-
-        
-
                         }
                     })
                     .catch(function (data_parsing_error) {
@@ -197,8 +182,5 @@ listItem.forEach(element => {
                 // Cas erreur server (API)
                 console.log(server_errors);
             })
-
-
-
     })
 });
