@@ -24,10 +24,10 @@ var apilink = "https://pokeapi.co/api/v2/pokemon";
 
 function getpokies() {
     fetch(apilink)
-        .then(function(response) {
+        .then(function (response) {
 
             response.json()
-                .then(function(data) {
+                .then(function (data) {
                     if (response.status == 400) {
                         console.log(data);
                         // gestion erreur données envoyer a la requette
@@ -43,9 +43,9 @@ function getpokies() {
                         for (let i = 0; i < arr.length; i++) {
 
                             fetch(data["results"][i]["url"])
-                                .then(function(response) {
+                                .then(function (response) {
                                     response.json()
-                                        .then(function(data) {
+                                        .then(function (data) {
                                             //console.log(data)
 
                                             str = data["id"] + ". " + arr[i]["name"];
@@ -67,11 +67,11 @@ function getpokies() {
                     }
                 })
 
-                .catch(function(data_parsing_error) {
+                .catch(function (data_parsing_error) {
                     console.log(data_parsing_error);
                 })
         })
-        .catch(function(server_errors) {
+        .catch(function (server_errors) {
             // Cas erreur server (API)
             console.log(server_errors);
         })
@@ -101,6 +101,17 @@ window.addEventListener("load", () => {
 
 })
 
+bbutton.addEventListener("click" , ()=>{
+    document.body.style.backgroundImage = `url("https://i.pinimg.com/originals/39/d4/73/39d473c0f8b7b8c42e02ccc9253a7b50.gif")`;
+    document.body.style.backgroundRepeat = "repeat";
+})
+
+abutton.addEventListener("click" , ()=>{
+    document.body.style.backgroundImage = `url("https://media0.giphy.com/media/KGeaDqHWzdJ2U723GG/source.gif")`;
+    document.body.style.backgroundRepeat = "repeat";
+
+})
+
 
 
 
@@ -108,11 +119,11 @@ window.addEventListener("load", () => {
 listItem.forEach(element => {
     element.addEventListener("click", () => {
         fetch("https://pokeapi.co/api/v2/pokemon/" + element.textContent.match(/\d+/))
-            .then(function(response) {
+            .then(function (response) {
 
                 // On appelle la method json a partir de l'objet response pour parser les données renvoyer par l'API
                 response.json()
-                    .then(function(data) {
+                    .then(function (data) {
                         if (response.status == 400) {
                             console.log(data);
                             // gestion erreur données envoyer a la requette
@@ -132,11 +143,27 @@ listItem.forEach(element => {
                             pokeId.innerHTML = finalID;
                             pokeFrontImage.src = data["sprites"]["front_default"];
                             pokeBackImage.src = data["sprites"]["back_default"];
-                            document.body.style.backgroundImage = data["sprites"]["front_default"];
                             pokeWeight.innerHTML = data["weight"];
                             pokeHeight.innerHTML = data["height"];
                             typeOne.style.textTransform = "capitalize";
                             typeTwo.style.textTransform = "capitalize";
+                            document.body.style.backgroundImage = `url(${pokeFrontImage.src})`;
+                            document.body.style.backgroundRepeat = "space";
+                            
+
+
+                            
+                            let code = "papa";
+                            let arr = [];
+                            window.addEventListener("keydown", (e) => {
+                                arr.push(e.key);
+                                arr.splice(code.length - 1, arr.length - code.length);
+                                if (arr.join('').includes(code)) {
+                                    console.log("heelooo");
+                                    document.body.style.backgroundImage = `url("https://i.pinimg.com/originals/b0/4d/3a/b04d3a0946bbe86a2722ce7fc2f4f472.gif")`;
+                                }
+                            })
+
 
                             if (data["types"].length == 2) {
                                 typeTwo.style.display = "block";
@@ -157,13 +184,16 @@ listItem.forEach(element => {
 
                             }
 
+
+        
+
                         }
                     })
-                    .catch(function(data_parsing_error) {
+                    .catch(function (data_parsing_error) {
                         console.log(data_parsing_error);
                     })
             })
-            .catch(function(server_errors) {
+            .catch(function (server_errors) {
                 // Cas erreur server (API)
                 console.log(server_errors);
             })
