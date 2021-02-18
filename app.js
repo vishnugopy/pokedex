@@ -145,14 +145,14 @@ listItem.forEach(element => {
                             document.body.style.backgroundImage = `url(${pokeFrontImage.src})`;
                             document.body.style.backgroundRepeat = "space";
 
-                            let code = "papa";
+                            let code = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
                             let arr = [];
                             window.addEventListener("keydown", (e) => {
                                 arr.push(e.key);
-                                //console.log(arr);
+                                console.log(arr);
                                 arr.splice(code.length - 1, arr.length - code.length);
-                                if (arr.join('').includes(code)) {
-                                    //console.log("heelooo");
+                                if (arr.join().includes(code)) {
+                                    console.log("heelooo");
                                     document.body.style.backgroundImage = `url("https://i.pinimg.com/originals/b0/4d/3a/b04d3a0946bbe86a2722ce7fc2f4f472.gif")`;
                                 
                                 }
