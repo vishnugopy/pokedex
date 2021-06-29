@@ -25,7 +25,6 @@ var apilink = "https://pokeapi.co/api/v2/pokemon";
 function getpokies() {
     fetch(apilink)
         .then(function (response) {
-
             response.json()
                 .then(function (data) {
                     if (response.status == 400) {
@@ -38,33 +37,26 @@ function getpokies() {
                         //console.log(data);
                         let arr = data["results"];
                         let str = "";
-
                         for (let i = 0; i < arr.length; i++) {
-
                             fetch(data["results"][i]["url"])
                                 .then(function (response) {
                                     response.json()
                                         .then(function (data) {
                                             //console.log(data)
-
                                             str = data["id"] + "." + arr[i]["name"];
                                             listItem[i].innerHTML = str;
                                         })
                                 })
-
-
                         }
 
                         listItem.forEach(element => {
                             element.style.textTransform = "capitalize";
 
                         });
-
                         next = data["next"];
                         previous = data["previous"];
                     }
                 })
-
                 .catch(function (data_parsing_error) {
                     console.log(data_parsing_error);
                 })
@@ -73,7 +65,6 @@ function getpokies() {
             // Cas erreur server (API)
             console.log(server_errors);
         })
-
 }
 
 rightButton.addEventListener("click", () => {
